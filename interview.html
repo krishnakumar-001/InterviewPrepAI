@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>AI Interview Pro | Smart Interview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #03050b; min-height: 100vh; color: #f1f5f9; }
+        .app-wrapper { min-height: 100vh; display: flex; flex-direction: column; background: radial-gradient(circle at 20% 30%, #0a0f1a, #020408); }
+        .navbar { background: rgba(10, 15, 26, 0.95); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 0.7rem 2rem; }
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo h1 { font-size: 1.5rem; background: linear-gradient(135deg, #fff, #a5b4fc, #8b5cf6); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700; }
+        .nav-menu a { text-decoration: none; color: #94a3b8; font-weight: 500; cursor: pointer; margin-left: 1.5rem; transition: color 0.2s; }
+        .nav-menu a:hover { color: white; }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1.4fr 0.9fr; gap: 1.2rem; padding: 1.2rem 1.5rem; flex: 1; }
+        .glass-card { background: rgba(12, 18, 30, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem; padding: 1.2rem; display: flex; flex-direction: column; overflow-y: auto; max-height: calc(100vh - 80px); }
+        .glass-card::-webkit-scrollbar { width: 4px; background: #1e293b; }
+        .glass-card::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 4px; }
+        .video-box { background: #070b14; border-radius: 1.2rem; overflow: hidden; position: relative; aspect-ratio: 16/9; width: 100%; border: 1px solid rgba(255,255,255,0.15); }
+        #videoFeed { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+        .camera-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #0a0f1a; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; backdrop-filter: blur(8px); z-index: 5; }
+        .hidden-overlay { display: none; }
+        .status-lights { display: flex; gap: 0.8rem; margin-top: 0.8rem; flex-wrap: wrap; }
+        .status-pill { background: rgba(0,0,0,0.6); padding: 0.3rem 0.8rem; border-radius: 40px; font-size: 0.7rem; display: flex; align-items: center; gap: 6px; }
+        .led { width: 8px; height: 8px; border-radius: 50%; background: #334155; }
+        .led.green { background: #22c55e; }
+        .led.red { background: #ef4444; }
+        .focus-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin: 0.8rem 0; }
+        .stat-block { background: rgba(0,0,0,0.45); border-radius: 0.8rem; padding: 0.5rem; text-align: center; font-size: 0.7rem; }
+        .stat-number { font-size: 1.2rem; font-weight: 700; color: #facc15; }
+        .progress-bar-bg { height: 6px; background: #1e293b; border-radius: 10px; overflow: hidden; margin-top: 4px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #22c55e, #84cc16); transition: width 0.2s; }
+        .question-card { background: rgba(0,0,0,0.4); border-radius: 1rem; padding: 1rem; margin: 0.8rem 0; border-left: 3px solid #4f46e5; }
+        .question-text { font-size: 1rem; font-weight: 500; margin-top: 0.3rem; line-height: 1.4; }
+        textarea { width: 100%; background: #0f172a; border: 1px solid #2d3a5e; border-radius: 1rem; padding: 0.8rem; color: #f1f5f9; font-family: inherit; font-size: 0.85rem; resize: vertical; margin: 0.6rem 0; }
+        button { border: none; padding: 0.7rem 1rem; border-radius: 2rem; font-weight: 600; cursor: pointer; font-family: inherit; font-size: 0.85rem; }
+        .btn-record { background: linear-gradient(135deg, #dc2626, #ef4444); color: white; }
+        .btn-record-active { background: linear-gradient(135deg, #b91c1c, #dc2626); animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(220,38,38,0.7); } 70% { box-shadow: 0 0 0 10px rgba(220,38,38,0); } }
+        .btn-success { background: #10b981; color: white; }
+        .btn-primary { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; }
+        .btn-secondary { background: #334155; color: white; }
+        .metric-row { margin: 0.6rem 0; }
+        .tips-list { list-style: none; margin-top: 0.8rem; }
+        .tips-list li { padding-left: 1.2rem; position: relative; margin-bottom: 0.4rem; font-size: 0.75rem; color: #cbd5e1; }
+        .tips-list li::before { content: "💡"; position: absolute; left: -2px; }
+        .voice-wave { display: inline-flex; gap: 2px; align-items: center; margin-left: 8px; }
+        .voice-wave span { width: 3px; height: 12px; background: #22c55e; border-radius: 2px; animation: wave 0.8s infinite; }
+        @keyframes wave { 0%,100% { height: 6px; } 50% { height: 18px; } }
+        .mic-permission-btn { background: #4f46e5; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.7rem; margin-top: 6px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: #0f172a; border-radius: 1.5rem; padding: 2rem; max-width: 400px; text-align: center; }
+        .resume-panel { background: rgba(0,0,0,0.3); border-radius: 1rem; padding: 0.8rem; margin-bottom: 1rem; }
+        .resume-textarea { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 0.8rem; padding: 0.8rem; color: white; font-size: 0.8rem; margin-top: 8px; }
+        .btn-generate { background: linear-gradient(135deg, #8b5cf6, #6d28d9); margin-top: 10px; width: 100%; }
+        .skill-tag { display: inline-block; background: #4f46e5; border-radius: 12px; padding: 2px 8px; font-size: 0.7rem; margin: 2px; }
+        .extracted-info { background: rgba(0,0,0,0.3); border-radius: 0.8rem; padding: 0.6rem; margin-top: 8px; font-size: 0.7rem; }
+        @media (max-width: 1000px) { .dashboard-grid { grid-template-columns: 1fr; padding: 1rem; } }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><h1>AI Interview<span>Smart</span></h1></div>
+            <div class="nav-menu">
+                <a id="dashboardLinkBtn">📊 Dashboard</a>
+                <a id="logoutBtn">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-grid">
+        <div class="glass-card">
+            <h3>📸 Camera & Focus</h3>
+            <div class="video-box">
+                <video id="videoFeed" autoplay playsinline muted></video>
+                <div id="cameraPlaceholder" class="camera-overlay">
+                    <span>🎥</span>
+                    <button id="manualCameraBtn" style="padding: 0.4rem 1rem; background:#4f46e5; border-radius: 2rem;">Enable Camera</button>
+                </div>
+            </div>
+            <div class="status-lights">
+                <div class="status-pill"><span class="led" id="cameraLed"></span> Camera</div>
+                <div class="status-pill"><span class="led" id="faceLed"></span> Face</div>
+                <div class="status-pill"><span class="led" id="focusLed"></span> Focus</div>
+            </div>
+            <div class="focus-stats-grid">
+                <div class="stat-block">⏱️ Session<br><span id="focusTimer" class="stat-number">00:00</span></div>
+                <div class="stat-block">👤 Face lost<br><span id="faceLostCount" class="stat-number">0</span></div>
+                <div class="stat-block">👀 Away<br><span id="awayCount" class="stat-number">0</span></div>
+                <div class="stat-block">🔄 Tab<br><span id="tabSwitchCount" class="stat-number">0</span></div>
+            </div>
+            <div class="focus-score">
+                <div>Focus Score <strong id="focusScoreValue">100%</strong></div>
+                <div class="progress-bar-bg"><div class="progress-fill" id="focusScoreBar" style="width:100%"></div></div>
+            </div>
+            <div class="event-feed" id="focusEventList"><div style="text-align:center;color:#64748b;">Ready</div></div>
+        </div>
+
+        <div class="glass-card">
+            <div style="display:flex; justify-content:space-between; margin-bottom:1rem">
+                <h2>🤖 AI Interviewer</h2>
+                <div style="font-family:monospace; font-size:1.3rem" id="globalTimer">00:00</div>
+            </div>
+            
+            <div class="resume-panel">
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px">
+                    <strong>📄 Paste Your Resume</strong>
+                    <button id="sampleResumeBtn" style="background:#4f46e5; padding:4px 8px; border-radius:1rem; font-size:0.7rem">📝 Load Sample</button>
+                </div>
+                <textarea id="resumeInput" rows="4" placeholder="Paste your resume here..."></textarea>
+                <button id="generateBtn" class="btn-generate">✨ Generate Dynamic Questions</button>
+                <div id="extractedInfo" class="extracted-info" style="display:none"></div>
+                <div id="resumeStatus" style="font-size:0.7rem; margin-top:8px"></div>
+            </div>
+
+            <div class="question-card">
+                <div style="font-size:0.7rem">Current Question</div>
+                <div class="question-text" id="questionText">👇 Click "Generate Questions" to start</div>
+            </div>
+            <textarea id="answerInput" rows="3" placeholder="Your answer will appear here..."></textarea>
+            
+            <div style="display:flex; gap:0.8rem">
+                <button id="recordBtn" class="btn-record" style="flex:1.5" disabled>🎙️ Generate First</button>
+                <button id="submitBtn" class="btn-success" style="flex:1" disabled>✅ Submit</button>
+            </div>
+            <div id="recordingMsg" style="display:none; background:#10b981; padding:0.5rem; border-radius:20px; text-align:center; margin:0.5rem 0">
+                🟢 RECORDING - Speak Now
+                <div class="voice-wave"><span></span><span></span><span></span></div>
+            </div>
+            
+            <div style="background:#1e293b; border-radius:12px; padding:8px; margin:8px 0">
+                <span>🎤 Microphone: </span><span id="micStatus" style="color:#f97316">Not started</span>
+            </div>
+            
+            <div class="feedback-metrics">
+                <div class="metric-row"><span>Clarity</span><div class="progress-bar-bg"><div id="clarityFill" class="progress-fill" style="width:0%; background:#3b82f6"></div></div></div>
+                <div class="metric-row"><span>Relevance</span><div class="progress-bar-bg"><div id="relevanceFill" class="progress-fill" style="width:0%; background:#8b5cf6"></div></div></div>
+                <div class="metric-row"><span>Confidence</span><div class="progress-bar-bg"><div id="confidenceFill" class="progress-fill" style="width:0%; background:#ec489a"></div></div></div>
+            </div>
+            
+            <button id="micBtn" class="mic-permission-btn">🎤 Request Microphone</button>
+        </div>
+
+        <div class="glass-card">
+            <h3>📊 Current Session</h3>
+            <div style="margin:0.8rem 0; text-align:center">
+                <div>🎯 Overall Score</div>
+                <div style="font-size:2rem; font-weight:bold; color:#facc15" id="overallScore">--</div>
+            </div>
+            <div>
+                <p>✅ Answers: <span id="answerCount">0</span>/<span id="totalQ">0</span></p>
+                <p>⏱️ Time: <span id="elapsedTime">0s</span></p>
+                <p>🎙️ Status: <span id="recordStatus">● Idle</span></p>
+            </div>
+            <hr style="margin:1rem 0">
+            <h4>📜 Interview History</h4>
+            <div id="historyList" style="max-height:200px; overflow-y:auto">
+                <div style="color:#64748b; text-align:center">No interviews yet</div>
+            </div>
+            <button id="finishBtn" class="btn-primary" style="margin-top:1rem; width:100%" disabled>🏆 Finish & Save</button>
+        </div>
+    </div>
+</div>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h3>Complete Interview?</h3>
+        <p>Answered <span id="modalAnswer">0</span>/<span id="modalTotal">0</span></p>
+        <div style="display:flex; gap:1rem; margin-top:1.5rem; justify-content:center">
+            <button id="modalConfirm" class="btn-success">Save & Go to Dashboard</button>
+            <button id="modalCancel" class="btn-secondary">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Sample Resume
+const SAMPLE = `Software Engineer with 4+ years experience in full-stack development
+• React.js and Node.js expert - built 5+ production applications
+• Led team of 3 developers for microservices migration
+• Proficient in Python, MongoDB, AWS, Docker, Kubernetes
+• Reduced API response time by 40% through optimization
+• Strong problem-solving and Agile methodology`;
+
+// Question Templates for dynamic generation
+const QUESTION_TEMPLATES = {
+    intro: [
+        "Tell me about yourself and your professional background.",
+        "Walk me through your career journey so far.",
+        "What inspired you to pursue this career path?"
+    ],
+    skill: (skill) => [
+        `Describe your experience with ${skill} in detail.`,
+        `What's the most challenging problem you solved using ${skill}?`,
+        `How do you stay updated with the latest ${skill} developments?`
+    ],
+    project: (project) => [
+        `Tell me about the project: "${project.substring(0,60)}..." - what was your role?`,
+        `What challenges did you face in this project and how did you overcome them?`,
+        `What was the impact of this project on the business/users?`
+    ],
+    achievement: [
+        "What's your biggest professional achievement so far?",
+        "Tell me about a time you went above and beyond.",
+        "What accomplishment are you most proud of?"
+    ],
+    conflict: [
+        "How do you handle conflicts within a team?",
+        "Describe a situation where you had to resolve a disagreement.",
+        "Tell me about a difficult team situation and how you handled it."
+    ],
+    future: [
+        "Where do you see yourself in 3-5 years?",
+        "What are your career goals and how does this role align?",
+        "What skills do you want to develop in the next few years?"
+    ]
+};
+
+// History Storage
+let history = [];
+
+function loadHistory() {
+    const stored = localStorage.getItem('interviewHistory');
+    if(stored) {
+        try { history = JSON.parse(stored); } catch(e) { history = []; }
+    }
+    renderHistory();
+}
+
+function saveHistory() {
+    localStorage.setItem('interviewHistory', JSON.stringify(history));
+    renderHistory();
+}
+
+function addToHistory(data) {
+    history.unshift({
+        id: Date.now(),
+        date: new Date().toLocaleString(),
+        questions: data.questions,
+        answers: data.answers,
+        score: data.score,
+        focus: data.focus,
+        duration: data.duration
+    });
+    saveHistory();
+}
+
+function renderHistory() {
+    const container = document.getElementById('historyList');
+    if(!container) return;
+    if(history.length === 0) {
+        container.innerHTML = '<div style="color:#64748b; text-align:center">✨ No interviews yet</div>';
+        return;
+    }
+    container.innerHTML = history.slice(0,5).map(h => `
+        <div style="background:rgba(79,70,229,0.2); margin-bottom:8px; padding:8px; border-radius:12px">
+            <div style="display:flex; justify-content:space-between">
+                <span>📅 ${h.date}</span>
+                <span style="color:#facc15">⭐ ${h.score}%</span>
+            </div>
+            <div>✅ ${h.answers}/${h.questions} answers</div>
+            <div>🎯 Focus: ${h.focus}% | ⏱️ ${Math.floor(h.duration/60)}m ${h.duration%60}s</div>
+        </div>
+    `).join('');
+}
+
+// Dynamic Question Generator
+function generateDynamicQuestions(resumeText) {
+    const text = resumeText.toLowerCase();
+    
+    // Extract skills
+    const skillKeywords = ['react', 'node', 'python', 'java', 'javascript', 'sql', 'mongodb', 'aws', 'docker', 'kubernetes', 'typescript', 'git'];
+    let skills = [];
+    skillKeywords.forEach(skill => {
+        if(text.includes(skill)) skills.push(skill.charAt(0).toUpperCase() + skill.slice(1));
+    });
+    skills = [...new Set(skills)].slice(0,4);
+    
+    // Extract projects
+    let projects = [];
+    const lines = resumeText.split('\n');
+    for(let line of lines) {
+        if((line.includes('•') || line.includes('-')) && line.length > 15 && line.length < 100) {
+            projects.push(line.replace(/[•\-]/g, '').trim());
+        }
+    }
+    projects = projects.slice(0,2);
+    
+    // Generate questions dynamically
+    let questions = [];
+    
+    // Random intro question
+    questions.push(QUESTION_TEMPLATES.intro[Math.floor(Math.random() * QUESTION_TEMPLATES.intro.length)]);
+    
+    // Skill-based questions
+    if(skills.length > 0) {
+        let skillQuestions = [];
+        skills.forEach(skill => {
+            const templates = QUESTION_TEMPLATES.skill(skill);
+            skillQuestions.push(templates[Math.floor(Math.random() * templates.length)]);
+        });
+        questions.push(...skillQuestions.slice(0,2));
+    } else {
+        questions.push("What technical skills are you most proficient in?");
+        questions.push("How do you approach learning new technologies?");
+    }
+    
+    // Project-based questions
+    if(projects.length > 0) {
+        let projectQuestions = [];
+        projects.forEach(project => {
+            const templates = QUESTION_TEMPLATES.project(project);
+            projectQuestions.push(templates[Math.floor(Math.random() * templates.length)]);
+        });
+        questions.push(...projectQuestions.slice(0,2));
+    } else {
+        questions.push("Describe a challenging project you worked on recently.");
+        questions.push("What was your biggest technical challenge and how did you solve it?");
+    }
+    
+    // Random achievement question
+    questions.push(QUESTION_TEMPLATES.achievement[Math.floor(Math.random() * QUESTION_TEMPLATES.achievement.length)]);
+    
+    // Random conflict question
+    questions.push(QUESTION_TEMPLATES.conflict[Math.floor(Math.random() * QUESTION_TEMPLATES.conflict.length)]);
+    
+    // Random future question
+    questions.push(QUESTION_TEMPLATES.future[Math.floor(Math.random() * QUESTION_TEMPLATES.future.length)]);
+    
+    // Remove duplicates and limit to 6-7
+    questions = [...new Set(questions)];
+    questions = questions.slice(0,7);
+    
+    // Display extracted info
+    const extractedDiv = document.getElementById('extractedInfo');
+    if(extractedDiv && (skills.length || projects.length)) {
+        let html = '<strong>📋 Extracted from resume:</strong><br>';
+        if(skills.length) html += `🛠️ Skills: ${skills.map(s => `<span class="skill-tag">${s}</span>`).join(' ')}<br>`;
+        if(projects.length) html += `📁 Projects: ${projects.slice(0,2).join(', ')}<br>`;
+        extractedDiv.innerHTML = html;
+        extractedDiv.style.display = 'block';
+    }
+    
+    return questions;
+}
+
+// Interview State
+let questions = [];
+let currentIndex = 0;
+let answers = [];
+let timerSec = 0;
+let timerInt = null;
+let isRecording = false;
+let recognition = null;
+let finalText = "";
+let micPerm = false;
+let cameraStream = null;
+let cameraOn = false;
+let focusActive = false;
+let focusCount = { face:0, away:0, tab:0 };
+let focusInt = null;
+
+// DOM Elements
+const recordBtn = document.getElementById('recordBtn');
+const submitBtn = document.getElementById('submitBtn');
+const micBtn = document.getElementById('micBtn');
+const generateBtn = document.getElementById('generateBtn');
+const sampleBtn = document.getElementById('sampleResumeBtn');
+const finishBtn = document.getElementById('finishBtn');
+const dashboardLink = document.getElementById('dashboardLinkBtn');
+const modal = document.getElementById('modal');
+const modalConfirm = document.getElementById('modalConfirm');
+const modalCancel = document.getElementById('modalCancel');
+
+const resumeInput = document.getElementById('resumeInput');
+const resumeStatus = document.getElementById('resumeStatus');
+const questionText = document.getElementById('questionText');
+const answerInput = document.getElementById('answerInput');
+const recordingMsg = document.getElementById('recordingMsg');
+const micStatus = document.getElementById('micStatus');
+const recordStatus = document.getElementById('recordStatus');
+const timerSpan = document.getElementById('globalTimer');
+const elapsedSpan = document.getElementById('elapsedTime');
+const answerCountSpan = document.getElementById('answerCount');
+const totalQSpan = document.getElementById('totalQ');
+const overallSpan = document.getElementById('overallScore');
+
+const clarityFill = document.getElementById('clarityFill');
+const relevanceFill = document.getElementById('relevanceFill');
+const confidenceFill = document.getElementById('confidenceFill');
+
+const focusTimerSpan = document.getElementById('focusTimer');
+const faceLostSpan = document.getElementById('faceLostCount');
+const awaySpan = document.getElementById('awayCount');
+const tabSpan = document.getElementById('tabSwitchCount');
+const focusScoreSpan = document.getElementById('focusScoreValue');
+const focusScoreBar = document.getElementById('focusScoreBar');
+const focusEventList = document.getElementById('focusEventList');
+const cameraLed = document.getElementById('cameraLed');
+const faceLed = document.getElementById('faceLed');
+const focusLed = document.getElementById('focusLed');
+
+const videoFeed = document.getElementById('videoFeed');
+const cameraPlaceholder = document.getElementById('cameraPlaceholder');
+const manualCameraBtn = document.getElementById('manualCameraBtn');
+
+// Update UI
+function updateUI() {
+    if(!questions.length) return;
+    questionText.innerText = questions[currentIndex];
+    totalQSpan.innerText = questions.length;
+    answerCountSpan.innerText = answers.length;
+    answerInput.value = "";
+    finalText = "";
+    clarityFill.style.width = "0%";
+    relevanceFill.style.width = "0%";
+    confidenceFill.style.width = "0%";
+}
+
+function enableButtons() {
+    recordBtn.disabled = false;
+    recordBtn.innerHTML = "🎙️ START RECORDING";
+    submitBtn.disabled = false;
+    finishBtn.disabled = false;
+}
+
+// Generate Questions
+function generateQuestions() {
+    const text = resumeInput.value.trim();
+    if(!text) {
+        resumeStatus.innerHTML = "⚠️ Please paste your resume!";
+        resumeStatus.style.color = "#ef4444";
+        return;
+    }
+    
+    resumeStatus.innerHTML = "🔄 Generating dynamic questions...";
+    resumeStatus.style.color = "#facc15";
+    
+    // Generate questions based on resume
+    questions = generateDynamicQuestions(text);
+    currentIndex = 0;
+    answers = [];
+    timerSec = 0;
+    if(timerInt) clearInterval(timerInt);
+    timerSpan.innerText = "00:00";
+    elapsedSpan.innerText = "0s";
+    overallSpan.innerText = "--";
+    
+    updateUI();
+    enableButtons();
+    
+    resumeStatus.innerHTML = `✅ Generated ${questions.length} dynamic questions!`;
+    resumeStatus.style.color = "#22c55e";
+}
+
+// Microphone
+async function requestMic() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach(t => t.stop());
+        micPerm = true;
+        micStatus.innerText = "✅ Ready!";
+        micStatus.style.color = "#22c55e";
+    } catch(e) {
+        micPerm = false;
+        micStatus.innerText = "❌ Denied";
+        alert("Please allow microphone access");
+    }
+}
+
+// Camera
+async function enableCamera() {
+    if(cameraOn && cameraStream?.active) return;
+    try {
+        if(cameraStream) cameraStream.getTracks().forEach(t => t.stop());
+        cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        videoFeed.srcObject = cameraStream;
+        cameraPlaceholder.classList.add('hidden-overlay');
+        cameraOn = true;
+        cameraLed.className = 'led green';
+    } catch(e) {
+        cameraLed.className = 'led red';
+    }
+}
+
+// Focus Monitor
+function startFocus() {
+    if(!cameraOn) enableCamera();
+    if(focusActive) return;
+    focusActive = true;
+    focusCount = { face:0, away:0, tab:0 };
+    let startTime = Date.now();
+    
+    if(focusInt) clearInterval(focusInt);
+    focusInt = setInterval(() => {
+        if(!focusActive) return;
+        let elapsed = Math.floor((Date.now() - startTime) / 1000);
+        focusTimerSpan.innerText = `${Math.floor(elapsed/60).toString().padStart(2,'0')}:${(elapsed%60).toString().padStart(2,'0')}`;
+        
+        // Random focus events
+        if(Math.random() < 0.08) {
+            focusCount.face++;
+            faceLostSpan.innerText = focusCount.face;
+            addEvent("⚠️ Face Lost");
+        }
+        if(Math.random() < 0.06) {
+            focusCount.away++;
+            awaySpan.innerText = focusCount.away;
+            addEvent("👀 Looking Away");
+        }
+        
+        let total = focusCount.face + focusCount.away + focusCount.tab;
+        let score = Math.max(0, 100 - total * 4);
+        focusScoreSpan.innerText = score + "%";
+        focusScoreBar.style.width = score + "%";
+        focusLed.className = score > 70 ? 'led green' : (score > 40 ? 'led yellow' : 'led red');
+    }, 3000);
+}
+
+function addEvent(msg) {
+    let div = document.createElement('div');
+    div.style.cssText = 'background:rgba(255,255,255,0.05);padding:4px;border-radius:8px;margin-bottom:4px;font-size:11px';
+    div.innerHTML = `${new Date().toLocaleTimeString()} ${msg}`;
+    focusEventList.prepend(div);
+}
+
+function stopFocus() {
+    focusActive = false;
+    if(focusInt) clearInterval(focusInt);
+}
+
+// Voice Recognition
+function startRecording() {
+    if(!micPerm) { alert("Request microphone first!"); return false; }
+    if(!('webkitSpeechRecognition' in window)) { alert("Chrome/Edge required"); return false; }
+    if(isRecording) return true;
+    
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
+    finalText = answerInput.value || "";
+    isRecording = true;
+    recordingMsg.style.display = 'block';
+    recordBtn.innerHTML = "⏹️ STOP RECORDING";
+    recordBtn.classList.add('btn-record-active');
+    recordStatus.innerHTML = '🔴 RECORDING';
+    
+    recognition.onresult = (e) => {
+        let interim = "", final = "";
+        for(let i = e.resultIndex; i < e.results.length; i++) {
+            if(e.results[i].isFinal) final += e.results[i][0].transcript + " ";
+            else interim += e.results[i][0].transcript;
+        }
+        if(final) finalText += final;
+        answerInput.value = finalText + interim;
+        analyzeText(answerInput.value);
+    };
+    recognition.onerror = () => stopRecording();
+    recognition.onend = () => { if(isRecording) try{ recognition.start(); } catch(e){ stopRecording(); } };
+    recognition.start();
+    return true;
+}
+
+function stopRecording() {
+    if(recognition) { try{ recognition.stop(); } catch(e){} recognition = null; }
+    isRecording = false;
+    recordingMsg.style.display = 'none';
+    recordBtn.innerHTML = "🎙️ START RECORDING";
+    recordBtn.classList.remove('btn-record-active');
+    recordStatus.innerHTML = '● Idle';
+}
+
+function toggleRecording() {
+    if(questions.length === 0) { alert("Generate questions first!"); return; }
+    if(isRecording) stopRecording();
+    else {
+        if(!micPerm) { alert("Request microphone first!"); return; }
+        enableCamera();
+        if(!focusActive) startFocus();
+        if(!timerInt) startTimer();
+        startRecording();
+    }
+}
+
+function startTimer() {
+    if(timerInt) clearInterval(timerInt);
+    timerInt = setInterval(() => {
+        timerSec++;
+        timerSpan.innerText = `${Math.floor(timerSec/60).toString().padStart(2,'0')}:${(timerSec%60).toString().padStart(2,'0')}`;
+        elapsedSpan.innerText = `${timerSec}s`;
+    }, 1000);
+}
+
+function analyzeText(text) {
+    if(!text.trim()) return;
+    let words = text.trim().split(/\s+/).length;
+    let clarity = Math.min(100, 55 + Math.floor(words/2));
+    let relevance = 45;
+    ['experience','project','team','skill','learn'].forEach(k => { if(text.toLowerCase().includes(k)) relevance += 10; });
+    relevance = Math.min(100, relevance);
+    let confidence = Math.min(100, 50 + Math.floor(words/2.2));
+    clarityFill.style.width = clarity + "%";
+    relevanceFill.style.width = relevance + "%";
+    confidenceFill.style.width = confidence + "%";
+}
+
+function submitAnswer() {
+    if(questions.length === 0) { alert("Generate questions first!"); return; }
+    let ans = answerInput.value.trim();
+    if(!ans) { alert("Please provide an answer"); return; }
+    answers.push(ans);
+    answerCountSpan.innerText = answers.length;
+    
+    if(currentIndex + 1 < questions.length) {
+        currentIndex++;
+        updateUI();
+    } else {
+        showModal();
+    }
+}
+
+function showModal() {
+    document.getElementById('modalAnswer').innerText = answers.length;
+    document.getElementById('modalTotal').innerText = questions.length;
+    modal.style.display = 'flex';
+}
+
+function finishAndSave() {
+    if(isRecording) stopRecording();
+    if(timerInt) clearInterval(timerInt);
+    if(focusActive) stopFocus();
+    if(cameraStream) cameraStream.getTracks().forEach(t => t.stop());
+    
+    let focusVal = parseInt(focusScoreSpan.innerText) || 70;
+    let score = Math.min(98, 60 + Math.floor(answers.length * 5) + Math.floor(focusVal/15));
+    overallSpan.innerText = score + "%";
+    
+    addToHistory({
+        questions: questions.length,
+        answers: answers.length,
+        score: score,
+        focus: focusVal,
+        duration: timerSec
+    });
+    
+    alert(`✅ Interview Saved!\nScore: ${score}%\nAnswers: ${answers.length}/${questions.length}`);
+    window.location.href = "dashboard.html";
+}
+
+function goToDashboard() {
+    window.location.href = "dashboard.html";
+}
+
+// Event Listeners
+sampleBtn.addEventListener('click', () => {
+    resumeInput.value = SAMPLE;
+    resumeStatus.innerHTML = "✅ Sample loaded! Click 'Generate Questions'";
+    resumeStatus.style.color = "#22c55e";
+});
+
+generateBtn.addEventListener('click', generateQuestions);
+micBtn.addEventListener('click', requestMic);
+recordBtn.addEventListener('click', toggleRecording);
+submitBtn.addEventListener('click', submitAnswer);
+finishBtn.addEventListener('click', showModal);
+modalConfirm.addEventListener('click', finishAndSave);
+modalCancel.addEventListener('click', () => modal.style.display = 'none');
+dashboardLink.addEventListener('click', goToDashboard);
+manualCameraBtn.addEventListener('click', enableCamera);
+answerInput.addEventListener('input', (e) => analyzeText(e.target.value));
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    if(confirm('Logout?')) window.location.href = 'index.html';
+});
+
+window.addEventListener('click', (e) => { if(e.target === modal) modal.style.display = 'none'; });
+
+loadHistory();
+</script>
+</body>
+</html>

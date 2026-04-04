@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AI Interview Simulator</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+</head>
+<body>
+    <!-- Animated Interview Scene Background - Moving Robots and Colored Dots -->
+    <div class="bg-3d">
+        <!-- Moving Colored Dots Background -->
+        <div class="dots-3d">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        
+        <!-- Moving Robots -->
+        <div class="moving-robot robot-1">🤖</div>
+        <div class="moving-robot robot-2">👾</div>
+        <div class="moving-robot robot-3">🤖</div>
+        <div class="moving-robot robot-small">🤖</div>
+        <div class="moving-robot robot-small">👾</div>
+        
+        <!-- Robot Interview Scene - Less Blur -->
+        <div class="robot-interview-scene">
+            <div class="interview-room-blurred">
+                <div class="desk-3d-blurred">
+                    <div class="desk-top-blurred"></div>
+                    <div class="desk-leg-blurred left"></div>
+                    <div class="desk-leg-blurred right"></div>
+                </div>
+                <div class="laptop-3d-blurred">
+                    <div class="laptop-screen-blurred">
+                        <div class="video-call-blurred">
+                            <div class="interviewer-video-blurred"></div>
+                            <div class="candidate-video-blurred"></div>
+                        </div>
+                    </div>
+                    <div class="laptop-base-blurred"></div>
+                </div>
+                <div class="robot-assistant-blurred">
+                    <div class="robot-head-blurred"></div>
+                    <div class="robot-body-blurred"></div>
+                    <div class="robot-arm-blurred left"></div>
+                    <div class="robot-arm-blurred right"></div>
+                </div>
+                <div class="floating-icons-blurred">
+                    <div class="icon-3d-blurred">🔐</div>
+                    <div class="icon-3d-blurred">👤</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="auth-container">
+        <div class="auth-box glass-card">
+            <div class="auth-header">
+                <h2>Welcome Back</h2>
+                <p>Login to continue your interview practice</p>
+            </div>
+            
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
+                </div>
+                
+                <!-- Loading Spinner (hidden by default) -->
+                <div id="loginLoading" class="loading-spinner" style="display: none; margin: 1rem auto;"></div>
+                
+                <button type="submit" class="btn-auth" id="loginBtn">Login</button>
+            </form>
+            
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="register.html">Sign Up</a></p>
+                <a href="index.html" class="back-home">← Back to Home</a>
+            </div>
+
+            <!-- Demo Credentials for testing -->
+            <div class="demo-credentials" style="margin-top: 1.5rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 10px; text-align: center;">
+                <p style="color: #ffd93d; margin-bottom: 0.5rem;">🔑 <strong>Demo Credentials:</strong></p>
+                <code style="display: block; color: #a5b4fc;">Email: demo@example.com</code>
+                <code style="display: block; color: #a5b4fc;">Password: demo123</code>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem; color: rgba(255,255,255,0.6);">Or use the account you registered with</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notification for errors/success -->
+    <div id="toast" class="toast" style="display: none;"></div>
+    
+    <script src="js/auth.js"></script>
+</body>
+</html>
