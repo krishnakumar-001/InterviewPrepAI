@@ -3,157 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Smart Interview Simulator | The Hacktopians</title>
-    <link rel="stylesheet" href="style.css">
+    <title>AI Smart Interview Simulator</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-
-    <div class="bg-effects">
-        <div class="gradient-orb orb1"></div>
-        <div class="gradient-orb orb2"></div>
-        <div class="gradient-orb orb3"></div>
-        <div class="noise"></div>
-    </div>
-
+    <!-- Navbar -->
     <nav class="navbar">
-        <div class="container nav-container">
-            <div class="logo">Hacktopians<span>AI Interview</span></div>
-            <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#team">Team</a></li>
-            </ul>
+        <div class="nav-container">
+            <div class="logo">
+                <h1>AI Interview<span>Smart</span></h1>
+            </div>
+            <div class="nav-menu">
+                <a href="#home">Home</a>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#team">Team</a>
+                <a href="login.html" class="btn-login">Login</a>
+                <a href="register.html" class="btn-signup">Sign Up</a>
+            </div>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="container">
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
             <div class="hero-content">
-                <h1>AI Smart Interview <span>Simulator Platform</span></h1>
-                <p>Practice real interviews, get instant AI feedback, and land your dream job.</p>
-                <a href="#" class="btn-primary">Start Free Practice →</a>
+                <h1 class="glow-text">AI Smart Interview Simulator</h1>
+                <p>Practice interviews with AI-powered feedback and personalized coaching</p>
+                <div class="hero-buttons">
+                    <a href="register.html" class="btn-primary pulse">Get Started Free</a>
+                    <a href="#features" class="btn-secondary">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="interview-illustration">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='400' viewBox='0 0 500 400'%3E%3Crect width='500' height='400' fill='url(%23grad)' rx='20'/%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23667eea;stop-opacity:0.9' /%3E%3Cstop offset='100%25' style='stop-color:%23ff6b6b;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='250' cy='150' r='70' fill='white' opacity='0.3'/%3E%3Ccircle cx='250' cy='150' r='50' fill='%23667eea'/%3E%3Ctext x='230' y='170' font-family='Arial' font-size='50' fill='white'%3E🤖%3C/text%3E%3Crect x='150' y='230' width='200' height='100' rx='15' fill='white' opacity='0.4'/%3E%3Ctext x='190' y='290' font-family='Arial' font-size='24' fill='white'%3EAI Interview%3C/text%3E%3C/svg%3E" alt="AI Interview Illustration" class="floating">
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="problems">
-        <div class="container">
-            <div class="section-title">
-                <h2>Interviews: A Tough Nut to Crack</h2>
-                <p>Today's job interviews create problems for everyone</p>
+    <!-- How It Works Section - Alternating Left/Right on Scroll -->
+    <section id="how-it-works" class="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+        <div class="how-it-works-container">
+            <!-- Step 1 - Left -->
+            <div class="step-wrapper left">
+                <div class="step-card glass-card">
+                    <div class="step-badge">1</div>
+                    <div class="step-content">
+                        <div class="step-icon">📝</div>
+                        <div class="step-text">
+                            <h3>Sign Up</h3>
+                            <p>Create your free account in seconds with just your email. No credit card required.</p>
+                            <ul class="step-features">
+                                <li>Quick registration</li>
+                                <li>Free forever</li>
+                                <li>Instant access</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="problem-grid">
-                <div class="problem-card"><div class="problem-icon">🎯</div><h3>No Practice or Advice</h3><p>Job seekers don't get enough chances to practice real interviews.</p></div>
-                <div class="problem-card"><div class="problem-icon">⚖️</div><h3>Unfair Judging</h3><p>Hiring managers judge based on feelings, leading to biased choices.</p></div>
-                <div class="problem-card"><div class="problem-icon">⏰</div><h3>Takes Too Much Time & Money</h3><p>Traditional practice interviews cost a lot, making help inaccessible.</p></div>
+
+            <!-- Step 2 - Right -->
+            <div class="step-wrapper right">
+                <div class="step-card glass-card">
+                    <div class="step-badge">2</div>
+                    <div class="step-content">
+                        <div class="step-icon">👔</div>
+                        <div class="step-text">
+                            <h3>Choose Role</h3>
+                            <p>Select your target job role and industry for personalized questions. 50+ roles available.</p>
+                            <ul class="step-features">
+                                <li>50+ job roles</li>
+                                <li>Industry specific</li>
+                                <li>Custom difficulty</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 - Left -->
+            <div class="step-wrapper left">
+                <div class="step-card glass-card">
+                    <div class="step-badge">3</div>
+                    <div class="step-content">
+                        <div class="step-icon">🎙️</div>
+                        <div class="step-text">
+                            <h3>Practice Interview</h3>
+                            <p>Take an AI-powered mock interview with 10-15 questions and real-time interaction.</p>
+                            <ul class="step-features">
+                                <li>10-15 questions</li>
+                                <li>Speech recognition</li>
+                                <li>Real-time feedback</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4 - Right -->
+            <div class="step-wrapper right">
+                <div class="step-card glass-card">
+                    <div class="step-badge">4</div>
+                    <div class="step-content">
+                        <div class="step-icon">📊</div>
+                        <div class="step-text">
+                            <h3>Get Feedback</h3>
+                            <p>Receive detailed scores and personalized improvement tips to track your progress.</p>
+                            <ul class="step-features">
+                                <li>Detailed analysis</li>
+                                <li>Personalized tips</li>
+                                <li>Progress tracking</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- Features Section -->
     <section id="features" class="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Smart AI Helper</h2>
-                <p>Get ready for interviews and check skills with ease</p>
+        <h2 class="section-title">Why Choose Our Platform?</h2>
+        <div class="features-grid">
+            <div class="feature-card glass-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Real Interview Practice</h3>
+                <p>Practice with realistic interviews tailored to your industry and role</p>
             </div>
-            <div class="features-grid">
-                <div class="feature-card"><div class="feature-icon">🎤</div><h3>Practice Real Interviews</h3><p>Realistic interviews tailored to your job with adaptive questions.</p></div>
-                <div class="feature-card"><div class="feature-icon">⚡</div><h3>Get Quick AI Tips</h3><p>Instant feedback on speech, body language, and content.</p></div>
-                <div class="feature-card"><div class="feature-icon">🎓</div><h3>Your Own Coach</h3><p>Personalized tips to help you improve continuously.</p></div>
+            <div class="feature-card glass-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI-Powered Feedback</h3>
+                <p>Get instant feedback on your answers, body language, and speaking style</p>
             </div>
-        </div>
-    </section>
-
-    <section id="how-it-works" class="steps">
-        <div class="container">
-            <div class="section-title">
-                <h2>How Our Platform Works</h2>
-                <p>Simple steps to interview mastery</p>
+            <div class="feature-card glass-card">
+                <div class="feature-icon">📊</div>
+                <h3>Detailed Analytics</h3>
+                <p>Track your progress with comprehensive reports and insights</p>
             </div>
-            <div class="timeline">
-                <div class="timeline-line"></div>
-                <div class="timeline-item left">
-                    <div class="timeline-dot">1</div>
-                    <div class="timeline-card">
-                        <h3>Select Role</h3>
-                        <p>Choose your job role and industry</p>
-                    </div>
-                </div>
-                <div class="timeline-item right">
-                    <div class="timeline-dot">2</div>
-                    <div class="timeline-card">
-                        <h3>AI Interview</h3>
-                        <p>Start smart interview with adaptive questions</p>
-                    </div>
-                </div>
-                <div class="timeline-item left">
-                    <div class="timeline-dot">3</div>
-                    <div class="timeline-card">
-                        <h3>Real-time Analysis</h3>
-                        <p>AI analyzes speech, content & body language</p>
-                    </div>
-                </div>
-                <div class="timeline-item right">
-                    <div class="timeline-dot">4</div>
-                    <div class="timeline-card">
-                        <h3>Score + Report</h3>
-                        <p>Get instant feedback and detailed dashboard</p>
-                    </div>
-                </div>
+            <div class="feature-card glass-card">
+                <div class="feature-icon">🎓</div>
+                <h3>Personal Coach</h3>
+                <p>Receive customized tips and strategies to improve your performance</p>
             </div>
         </div>
     </section>
 
-    <section class="key-features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Key Features & Novelty</h2>
-                <p>What makes us different</p>
-            </div>
-            <div class="key-grid">
-                <div class="key-card"><h3>🗣️ Smart Speech & Text Analysis</h3><p>Understands spoken/written words and sentiment.</p></div>
-                <div class="key-card"><h3>🪞 Body Language Feedback</h3><p>Analyzes eye contact, facial expressions, and posture.</p></div>
-                <div class="key-card"><h3>🧠 Smart Questions</h3><p>AI adapts questions based on your answers for realism.</p></div>
-                <div class="key-card"><h3>📊 Easy-to-Read Reports</h3><p>Detailed reports with clear advice to track progress.</p></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="challenges">
-        <div class="container">
-            <div class="section-title">
-                <h2>Challenges & Our Solutions</h2>
-                <p>Building smart AI the right way</p>
-            </div>
-            <div class="challenge-grid">
-                <div class="challenge-card"><h3>🔒 Keeping Your Data Private</h3><p>Strong encryption and strict privacy rules.</p></div>
-                <div class="challenge-card"><h3>⚖️ Making AI Fair</h3><p>Training with diverse examples and continuous improvement.</p></div>
-                <div class="challenge-card"><h3>⚡ Instant Feedback</h3><p>Super-fast programs for zero delay feedback.</p></div>
-                <div class="challenge-card"><h3>🎙️ Understanding Speech in Noise</h3><p>Noise-blocking tech adapts to different accents.</p></div>
-            </div>
-        </div>
-    </section>
-
+    <!-- Team Section -->
     <section id="team" class="team">
-        <div class="container">
-            <div class="section-title">
-                <h2>Meet The Hacktopians</h2>
-                <p>Passionate team making interviews better with AI</p>
+        <h2 class="section-title">Meet The Hacktopians</h2>
+        <div class="team-grid">
+            <div class="team-member glass-card">
+                <div class="member-img-wrapper">
+                    <img src="Picture1.png" alt="Kashish Rajput">
+                </div>
+                <h3>Kashish Rajput</h3>
+                <p>Documentation/Research</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
             </div>
-            <div class="team-grid">
-                <div class="team-card"><h3>Kashish Rajput</h3><p>9149221198 · kashishr0205@gmail.com</p><div class="social">GitHub | LinkedIn</div></div>
-                <div class="team-card"><h3>Vanshika Jain</h3><p>7060147969 · vanshikaf2018@gmail.com</p><div class="social">GitHub | LinkedIn</div></div>
-                <div class="team-card"><h3>Ish Vandana Vats</h3><p>7310962503 · ishvandanavats@gmail.com</p><div class="social">GitHub | LinkedIn</div></div>
-                <div class="team-card"><h3>Krishna Kumar</h3><p>7895476703 · kk9595298@gmail.com</p><div class="social">GitHub | LinkedIn</div></div>
+            <div class="team-member glass-card">
+                <div class="member-img-wrapper">
+                    <img src="Picture2.png" alt="Vanshika Jain">
+                </div>
+                <h3>Vanshika Jain</h3>
+                <p>UI/UX Designer</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="team-member glass-card">
+                <div class="member-img-wrapper">
+                    <img src="Picture3.png" alt="Ish Vandana Vats">
+                </div>
+                <h3>Ish Vandana Vats</h3>
+                <p>Frontend Developer/Database Manager</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="team-member glass-card">
+                <div class="member-img-wrapper">
+                 <img src="Picture4.png" alt ="Krishna Kumar">
+            </div>
+                 <h3>Krishna Kumar</h3>
+                 <p>Backend / AI Integration</p>
+                 <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
-        <div class="container">
-            <p>© 2025 The Hacktopians — AI Smart Interview Simulator. All rights reserved.</p>
-            <p style="margin-top: 10px;">💡 Built with Software First, Powered by AI</p>
-        </div>
+        <p>&copy; 2024 AI Smart Interview Simulator. All rights reserved.</p>
     </footer>
 
 </body>
