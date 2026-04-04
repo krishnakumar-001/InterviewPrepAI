@@ -1,16 +1,309 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | AI Interview Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: radial-gradient(circle at 20% 30%, #0a0f1a, #020408); min-height: 100vh; color: #f1f5f9; }
+        .navbar { background: rgba(10, 15, 26, 0.95); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 0.7rem 2rem; position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo h1 { font-size: 1.5rem; background: linear-gradient(135deg, #fff, #a5b4fc, #8b5cf6); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700; }
+        .nav-menu a { text-decoration: none; color: #94a3b8; font-weight: 500; cursor: pointer; margin-left: 1.5rem; transition: color 0.2s; }
+        .nav-menu a:hover { color: white; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .hero { background: linear-gradient(135deg, rgba(79,70,229,0.2), rgba(139,92,246,0.1)); border-radius: 1.5rem; padding: 2rem; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.1); }
+        .hero h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .hero h1 span { color: #facc15; }
+        .hero p { color: #94a3b8; }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .stat-card { background: rgba(12, 18, 30, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem; padding: 1.5rem; transition: all 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); border-color: rgba(79,70,229,0.5); }
+        .stat-value { font-size: 2.5rem; font-weight: 700; color: #facc15; margin: 0.5rem 0; }
+        .stat-label { font-size: 0.85rem; color: #94a3b8; }
+        .stat-icon { font-size: 2rem; }
+        .chart-section { background: rgba(12, 18, 30, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem; padding: 1.5rem; margin-bottom: 2rem; }
+        .chart-section h2 { margin-bottom: 1rem; font-size: 1.3rem; }
+        .chart-container { position: relative; height: 400px; }
+        canvas { max-height: 400px; width: 100%; }
+        .history-section { background: rgba(12, 18, 30, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem; padding: 1.5rem; }
+        .history-section h2 { margin-bottom: 1rem; font-size: 1.3rem; }
+        .interview-list { display: flex; flex-direction: column; gap: 0.8rem; max-height: 400px; overflow-y: auto; }
+        .interview-item { background: rgba(0,0,0,0.3); border-radius: 1rem; padding: 1rem; border-left: 3px solid #4f46e5; transition: all 0.2s; }
+        .interview-item:hover { background: rgba(79,70,229,0.1); }
+        .interview-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+        .interview-date { font-size: 0.75rem; color: #94a3b8; }
+        .interview-score { font-weight: bold; color: #facc15; font-size: 1.1rem; }
+        .interview-details { font-size: 0.8rem; color: #cbd5e1; margin-top: 0.3rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+        .empty-state { text-align: center; padding: 3rem; color: #64748b; }
+        .chart-note { text-align: center; font-size: 0.7rem; color: #64748b; margin-top: 0.5rem; }
+        @media (max-width: 768px) {
+            .stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .container { padding: 1rem; }
+            .chart-container { height: 300px; }
+        }
+    </style>
 </head>
 <body>
-    <h1>Dashboard 📊</h1>
-    <p>Welcome to Interview Prep AI Dashboard</p>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><h1>AI Interview<span>Smart</span></h1></div>
+            <div class="nav-menu">
+                <a id="newInterviewBtn">🎤 New Interview</a>
+                <a id="logoutBtn">Logout</a>
+            </div>
+        </div>
+    </nav>
 
-    <ul>
-        <li>Resume Analysis</li>
-        <li>Interview Questions</li>
-        <li>Performance Tracking</li>
-    </ul>
+    <div class="container">
+        <div class="hero">
+            <h1>Welcome back, <span id="userName">Candidate</span>! 👋</h1>
+            <p>Track your interview performance and watch your progress grow</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value" id="totalInterviews">0</div>
+                <div class="stat-label">Total Interviews</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-value" id="avgScore">0%</div>
+                <div class="stat-label">Average Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-value" id="totalAnswers">0</div>
+                <div class="stat-label">Total Answers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-value" id="bestScore">0%</div>
+                <div class="stat-label">Best Score</div>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h2>📈 Performance Trend</h2>
+            <div class="chart-container">
+                <canvas id="trendChart"></canvas>
+            </div>
+            <div class="chart-note">📊 Line shows your score trend over time - higher line = better performance</div>
+        </div>
+
+        <div class="history-section">
+            <h2>📋 Interview History</h2>
+            <div class="interview-list" id="interviewList">
+                <div class="empty-state">✨ No interviews completed yet. Take your first interview!</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allData = [];
+        let chart = null;
+
+        function loadData() {
+            const stored = localStorage.getItem('interviewHistory');
+            if(stored) {
+                try {
+                    allData = JSON.parse(stored);
+                    if(!Array.isArray(allData)) allData = [];
+                } catch(e) { allData = []; }
+            }
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            updateStats();
+            updateChart();
+            updateHistory();
+        }
+
+        function updateStats() {
+            const total = allData.length;
+            document.getElementById('totalInterviews').innerText = total;
+            
+            if(total > 0) {
+                const avg = Math.round(allData.reduce((sum, i) => sum + i.score, 0) / total);
+                const best = Math.max(...allData.map(i => i.score));
+                const totalAnswers = allData.reduce((sum, i) => sum + i.answers, 0);
+                document.getElementById('avgScore').innerText = avg + '%';
+                document.getElementById('bestScore').innerText = best + '%';
+                document.getElementById('totalAnswers').innerText = totalAnswers;
+            } else {
+                document.getElementById('avgScore').innerText = '0%';
+                document.getElementById('bestScore').innerText = '0%';
+                document.getElementById('totalAnswers').innerText = '0';
+            }
+        }
+
+        function updateChart() {
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            
+            if(chart) chart.destroy();
+            
+            if(allData.length === 0) {
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['No Data'],
+                        datasets: [{
+                            label: 'Score (%)',
+                            data: [0],
+                            borderColor: '#facc15',
+                            backgroundColor: 'rgba(250, 204, 21, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#facc15',
+                            pointBorderColor: '#fff',
+                            pointRadius: 6,
+                            pointHoverRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { labels: { color: '#94a3b8', font: { size: 12 } } },
+                            tooltip: { callbacks: { label: (ctx) => `Score: ${ctx.raw}%` } }
+                        },
+                        scales: {
+                            y: { min: 0, max: 100, grid: { color: '#1e293b' }, title: { display: true, text: 'Score (%)', color: '#94a3b8' }, ticks: { color: '#94a3b8' } },
+                            x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                        }
+                    }
+                });
+                return;
+            }
+
+            // Show in chronological order (oldest to newest)
+            const sorted = [...allData].reverse();
+            const labels = sorted.map((_, i) => `Interview ${i+1}`);
+            const scores = sorted.map(i => i.score);
+            const durations = sorted.map(i => i.duration);
+
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Score (%)',
+                            data: scores,
+                            borderColor: '#facc15',
+                            backgroundColor: 'rgba(250, 204, 21, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#facc15',
+                            pointBorderColor: '#fff',
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Duration (seconds)',
+                            data: durations,
+                            borderColor: '#4f46e5',
+                            backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: false,
+                            pointBackgroundColor: '#4f46e5',
+                            pointBorderColor: '#fff',
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            borderDash: [5, 5],
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { 
+                            position: 'top',
+                            labels: { color: '#94a3b8', font: { size: 12, weight: 'bold' } }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    let value = context.raw;
+                                    if(context.dataset.label === 'Score (%)') {
+                                        return `${label}: ${value}%`;
+                                    }
+                                    let mins = Math.floor(value / 60);
+                                    let secs = value % 60;
+                                    return `${label}: ${mins}m ${secs}s`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: { display: true, text: 'Score (%)', color: '#facc15', font: { weight: 'bold' } },
+                            min: 0,
+                            max: 100,
+                            grid: { color: '#1e293b' },
+                            ticks: { color: '#94a3b8', stepSize: 20, callback: (v) => v + '%' }
+                        },
+                        y1: {
+                            position: 'right',
+                            title: { display: true, text: 'Duration (seconds)', color: '#4f46e5', font: { weight: 'bold' } },
+                            grid: { drawOnChartArea: false },
+                            ticks: { color: '#94a3b8' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Interview Number (Oldest → Newest)', color: '#94a3b8' },
+                            grid: { display: false },
+                            ticks: { color: '#94a3b8' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateHistory() {
+            const container = document.getElementById('interviewList');
+            if(allData.length === 0) {
+                container.innerHTML = '<div class="empty-state">✨ No interviews completed yet. Take your first interview!</div>';
+                return;
+            }
+            
+            container.innerHTML = allData.map(interview => `
+                <div class="interview-item">
+                    <div class="interview-header">
+                        <span class="interview-date">📅 ${interview.date || 'Recent'}</span>
+                        <span class="interview-score">⭐ ${interview.score}%</span>
+                    </div>
+                    <div class="interview-details">
+                        <span>✅ ${interview.answers}/${interview.questions} questions answered</span>
+                        <span>🎯 Focus Score: ${interview.focus}%</span>
+                        <span>⏱️ Duration: ${Math.floor(interview.duration/60)}m ${interview.duration%60}s</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function goToInterview() {
+            window.location.href = "interview.html";
+        }
+
+        document.getElementById('newInterviewBtn').addEventListener('click', goToInterview);
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            if(confirm('Logout?')) window.location.href = 'index.html';
+        });
+
+        loadData();
+    </script>
 </body>
 </html>
