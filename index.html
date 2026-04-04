@@ -9,6 +9,116 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- Animated Interview Scene Background - Moving Robots and Colored Dots -->
+    <div class="bg-3d">
+        <!-- Moving Colored Dots Background -->
+        <div class="dots-3d">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        
+        <!-- Moving Robots -->
+        <div class="moving-robot robot-1">🤖</div>
+        <div class="moving-robot robot-2">👾</div>
+        <div class="moving-robot robot-3">🤖</div>
+        <div class="moving-robot robot-4">🦾</div>
+        <div class="moving-robot robot-5">🖥️</div>
+        <div class="moving-robot robot-small">🤖</div>
+        <div class="moving-robot robot-small">👾</div>
+        <div class="moving-robot robot-small">🤖</div>
+        <div class="moving-robot robot-small">🦿</div>
+        <div class="moving-robot robot-small">🤖</div>
+        
+        <!-- Robot Interview Scene - Less Blur -->
+        <div class="robot-interview-scene">
+            <!-- 3D Interview Room - Less Blur -->
+            <div class="interview-room-blurred">
+                <!-- 3D Desk - Less Blur -->
+                <div class="desk-3d-blurred">
+                    <div class="desk-top-blurred"></div>
+                    <div class="desk-leg-blurred left"></div>
+                    <div class="desk-leg-blurred right"></div>
+                </div>
+                
+                <!-- 3D Laptop with Video Call - Less Blur -->
+                <div class="laptop-3d-blurred">
+                    <div class="laptop-screen-blurred">
+                        <div class="video-call-blurred">
+                            <div class="interviewer-video-blurred"></div>
+                            <div class="candidate-video-blurred"></div>
+                            <div class="chat-messages-blurred">
+                                <div class="chat-bubble-blurred">Tell me about yourself</div>
+                                <div class="chat-bubble-blurred">Why this role?</div>
+                                <div class="chat-bubble-blurred">Your strengths?</div>
+                                <div class="chat-bubble-blurred">Teamwork experience?</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="laptop-base-blurred"></div>
+                </div>
+                
+                <!-- 3D Robot Assistant - Less Blur -->
+                <div class="robot-assistant-blurred">
+                    <div class="robot-head-blurred"></div>
+                    <div class="robot-body-blurred"></div>
+                    <div class="robot-arm-blurred left"></div>
+                    <div class="robot-arm-blurred right"></div>
+                </div>
+                
+                <!-- 3D Floating Chairs - Less Blur -->
+                <div class="chair-3d-blurred left">
+                    <div class="chair-seat-blurred"></div>
+                    <div class="chair-back-blurred"></div>
+                </div>
+                
+                <div class="chair-3d-blurred right">
+                    <div class="chair-seat-blurred"></div>
+                    <div class="chair-back-blurred"></div>
+                </div>
+                
+                <!-- Floating Interview Icons - Less Blur -->
+                <div class="floating-icons-blurred">
+                    <div class="icon-3d-blurred">📝</div>
+                    <div class="icon-3d-blurred">💼</div>
+                    <div class="icon-3d-blurred">⭐</div>
+                    <div class="icon-3d-blurred">📊</div>
+                    <div class="icon-3d-blurred">🎯</div>
+                    <div class="icon-3d-blurred">✅</div>
+                    <div class="icon-3d-blurred">🎙️</div>
+                    <div class="icon-3d-blurred">💬</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-container">
@@ -210,5 +320,32 @@
         <p>&copy; 2024 AI Smart Interview Simulator. All rights reserved.</p>
     </footer>
 
+    <!-- Scroll Animation Script -->
+    <script>
+        // Scroll animation for How It Works section
+        document.addEventListener('DOMContentLoaded', function() {
+            const stepWrappers = document.querySelectorAll('.step-wrapper');
+            
+            function checkScroll() {
+                stepWrappers.forEach(wrapper => {
+                    const wrapperTop = wrapper.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    // Add visible class when element enters viewport
+                    if (wrapperTop < windowHeight - 100) {
+                        wrapper.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Check on scroll
+            window.addEventListener('scroll', checkScroll);
+            
+            // Check on load
+            checkScroll();
+        });
+    </script>
+
+    <script src="main.js"></script>
 </body>
 </html>
