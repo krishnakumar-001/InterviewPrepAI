@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | AI Interview Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><h1>AI Interview<span>Smart</span></h1></div>
+            <div class="nav-menu">
+                <a id="newInterviewBtn">🎤 New Interview</a>
+                <a id="logoutBtn">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Welcome back, <span id="userName">Candidate</span>! 👋</h1>
+            <p>Track your interview performance and watch your progress grow</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value" id="totalInterviews">0</div>
+                <div class="stat-label">Total Interviews</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-value" id="avgScore">0%</div>
+                <div class="stat-label">Average Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-value" id="totalAnswers">0</div>
+                <div class="stat-label">Total Answers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-value" id="bestScore">0%</div>
+                <div class="stat-label">Best Score</div>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h2>📈 Performance Trend</h2>
+            <div class="chart-container">
+                <canvas id="trendChart"></canvas>
+            </div>
+            <div class="chart-note">📊 Line shows your score trend over time - higher line = better performance</div>
+        </div>
+
+        <div class="history-section">
+            <h2>📋 Interview History</h2>
+            <div class="interview-list" id="interviewList">
+                <div class="empty-state">✨ No interviews completed yet. Take your first interview!</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
