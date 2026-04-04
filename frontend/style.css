@@ -233,3 +233,224 @@ footer {
     text-align: center;
     opacity: 0.7;
 }
+
+
+
+
+
+/* ===== Simple Auth & Role Select Styles ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    background: linear-gradient(135deg, #0a0f1e 0%, #1a0f2a 50%, #0a1a2a 100%);
+    color: #fff;
+    min-height: 100vh;
+}
+
+/* ===== Container & Box ===== */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.auth-box {
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 30px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* ===== Role Select Specific Container ===== */
+.role-select-container {
+    max-width: 600px;
+    margin: 8rem auto 2rem;
+    padding: 2.5rem;
+    background: rgba(26, 31, 58, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 30px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* ===== Headers ===== */
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-header h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+
+.role-select-container h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+    font-size: 2.2rem;
+    text-align: center;
+}
+
+.auth-header p,
+.role-select-container p {
+    color: rgba(255, 255, 255, 0.95);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+/* ===== Form Elements ===== */
+.auth-form .form-group,
+.role-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.auth-form label,
+.role-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
+}
+
+.auth-form input,
+.auth-form select,
+.role-form select,
+.role-form input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.role-form select,
+.role-form input {
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+}
+
+.auth-form input:focus,
+.auth-form select:focus,
+.role-form select:focus,
+.role-form input:focus {
+    outline: none;
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.auth-form input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.auth-form select option,
+.role-form select option {
+    background: #1a1f3a;
+    color: white;
+}
+
+/* ===== Buttons ===== */
+.btn-auth,
+.btn-start {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #4a6cf7, #8a3ff0);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(74, 108, 247, 0.4);
+}
+
+.btn-start {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+
+.btn-auth:hover,
+.btn-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(74, 108, 247, 0.6);
+}
+
+/* ===== Footer Links ===== */
+.auth-footer {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.auth-footer a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+.back-home {
+    display: block;
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* ===== Helper Classes ===== */
+.text-gradient {
+    background: linear-gradient(135deg, #fff, #a5b4fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .role-select-container {
+        margin: 6rem 1rem 2rem;
+        padding: 1.8rem;
+    }
+    
+    .role-select-container h2 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .auth-box {
+        padding: 1.5rem;
+    }
+    
+    .role-select-container {
+        padding: 1.5rem;
+    }
+    
+    .role-select-container h2 {
+        font-size: 1.5rem;
+    }
+    
+    .btn-start {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+    }
+}
